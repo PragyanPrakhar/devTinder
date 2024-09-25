@@ -4,8 +4,8 @@ const userAuth = async (req, res, next) => {
     // Read the token from req.cookies.json
     try {
         const { token } = req.cookies;
-        if(!token){
-            throw new Error("Token is not valid !")
+        if (!token) {
+            throw new Error("Token is not valid !");
         }
         const decodedObj = await jwt.verify(token, "dev@123");
 
@@ -15,7 +15,7 @@ const userAuth = async (req, res, next) => {
         if (!user) {
             throw new Error("User Not Found");
         }
-        req.user=user;
+        req.user = user;
         next();
     } catch (error) {
         res.status(400).send("ERROR :" + error.message);
