@@ -22,6 +22,8 @@ const connectionRequestSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+//created a compound index
+connectionRequestSchema.index({fromUserId:1,toUserId:1});
 
 //This will be called just before everytime the connectionRequest will be save
 connectionRequestSchema.pre("save", function (next ) {
