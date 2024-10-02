@@ -3,6 +3,7 @@ const requestRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
+//for sending connection Requests
 requestRouter.post(
     "/request/send/:status/:toUserId",
     userAuth,
@@ -53,6 +54,7 @@ requestRouter.post(
     }
 );
 
+//for reviewing connection request.
 requestRouter.post(
     "/request/review/:status/:requestId",
     userAuth,
