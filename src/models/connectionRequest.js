@@ -20,16 +20,16 @@ const connectionRequestSchema = new mongoose.Schema(
             },
         },
     },
-    { timestamps: true }
+    { timestamps: true } 
 );
 //created a compound index
-connectionRequestSchema.index({fromUserId:1,toUserId:1});
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
 
 //This will be called just before everytime the connectionRequest will be save
-connectionRequestSchema.pre("save", function (next ) {
+connectionRequestSchema.pre("save", function (next) {   
     const connectionRequest = this;
     //check if fromUserId is same as toUserId
-    if (connectionRequest.fromUserId.equals(toUserId)) {
+    if (connectionRequest.fromUserId.equals(connectionRequest.toUserId)) {
         throw new Error("Can't send Connection Request to YourSelf");
     }
     next();

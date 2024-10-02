@@ -43,7 +43,8 @@ requestRouter.post(
             });
             const data = await connectionRequest.save();
             res.json({
-                message: req.user.firstName + " is " + status + toUser.firstName,
+                message:
+                    req.user.firstName + " is " + status + "in "+ toUser.firstName,
                 data,
             });
         } catch (error) {
@@ -51,4 +52,53 @@ requestRouter.post(
         }
     }
 );
+
+requestRouter.post(
+    "/request/review/:status/:requestId",
+    userAuth,
+    async (req, res) => {
+        try {
+            //from Hello Ma'am to Sakshi Ma'am
+            const { _id } = req.user;
+            console.log("_id of the user is", _id.toString());
+            const { status, requestId } = req.params;
+            console.log("request_id of the user is ", requestId);
+            //validating the status of the user
+            const allowedStatus = ["accepted", "rejected"];
+            if (!allowedStatus.includes(status)) {
+                return res
+                    .status(400)    
+                    .json({ message: "Invalid status type" + status });
+            }
+            // loggedIn user must be of toUserId
+            // status -> interested
+            // requestId should be valid
+            console.log("Logged in user ID: ", _id);
+            console.log("Request ID: ", requestId);
+
+            const connectionRequest = await ConnectionRequest.findOne({
+                _id: requestId,
+                toUserId: _id,
+                // toUserId: new ObjectId(loggedInUser._id),
+                status: "interested",
+            });
+            console.log("Connection Request", connectionRequest);
+            if (!connectionRequest) {
+                return res.status(404).json({
+                    message: "Connection Request Not Found !",
+                });
+            }
+
+            connectionRequest.status = status;
+            const data = await connectionRequest.save();
+            res.json({
+                message: "Connection Request Updated Successfully !",
+                data,
+            });
+        } catch (error) {
+            res.status(400).send("ERROR in Review Request " + error.message);
+        }
+    }
+);
+
 module.exports = requestRouter;
