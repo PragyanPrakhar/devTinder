@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./config/database");
-const cookieParser=require("cookie-parser");
+const cookieParser = require("cookie-parser");
 // const { userAuth } = require("../src/middlewares/auth");
-
+const cors = require("cors");
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+);
 app.use(express.json());
 app.use(cookieParser());
 
