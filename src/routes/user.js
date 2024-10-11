@@ -128,7 +128,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
                 },
                 { _id: { $ne: loggedInUser._id } },
             ],
-        }).select("firstName lastName photoUrl about,skills");
+        }).select("firstName lastName photoUrl about age gender skills");
 
         res.status(200).json({
             message: "Feed Fetched Successfully",

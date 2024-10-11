@@ -74,6 +74,6 @@ authRouter.post("/logout", (req, res) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
     });
-    res.send("User LoggedOut Successfully");
+    res.send("User Logged Out Successfully");
 });
 module.exports = authRouter;

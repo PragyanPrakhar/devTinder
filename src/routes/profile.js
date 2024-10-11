@@ -16,6 +16,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
         if (!validateEditProfileData(req)) {
             throw new Error("Invalid Edit Request");
         }
+        
         const loggedInUser = req.user;
         Object.keys(req.body).forEach((key) => {
             if (req.body[key] !== undefined) {
