@@ -89,7 +89,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         limit = limit > 50 ? 50 : limit;
         const skip = (page - 1) * 10;
 
-        console.log("Fetching Feed of the Logged In User");
+        // console.log("Fetching Feed of the Logged In User");
         //Find all connectionRequests that I have sent or received
         const connectionRequests = await connectionRequest
             .find({
@@ -106,10 +106,10 @@ userRouter.get("/feed", userAuth, async (req, res) => {
             .skip(skip)
             .limit(limit);
 
-        console.log(
+        /* console.log(
             "Connection Requests Fetched :- ",
             connectionRequests.length
-        );
+        ); */
 
         const hideUsersFromFeed = new Set();
         connectionRequests.forEach((req) => {
@@ -117,7 +117,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
             hideUsersFromFeed.add(req.toUserId.toString());
         });
 
-        console.log("Fetching Users");
+        // console.log("Fetching Users");
 
         const users = await User.find({
             $and: [

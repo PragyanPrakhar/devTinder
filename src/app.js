@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
+require('dotenv').config();
+
 // const { userAuth } = require("../src/middlewares/auth");
 const cors = require("cors");
 app.use(

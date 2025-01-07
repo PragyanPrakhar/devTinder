@@ -3,6 +3,7 @@ const requestRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
+const sendEmail = require("../utils/sendEmail");
 //for sending connection Requests
 requestRouter.post(
     "/request/send/:status/:toUserId",
@@ -43,9 +44,17 @@ requestRouter.post(
                 status,
             });
             const data = await connectionRequest.save();
+            const emailRes = await sendEmail.run();
+
+            console.log("Email Response", emailRes);
+
             res.json({
                 message:
-                    req.user.firstName + " is " + status + "in "+ toUser.firstName,
+                    req.user.firstName +
+                    " is " +
+                    status +
+                    "in " +
+                    toUser.firstName,
                 data,
             });
         } catch (error) {
@@ -69,7 +78,7 @@ requestRouter.post(
             const allowedStatus = ["accepted", "rejected"];
             if (!allowedStatus.includes(status)) {
                 return res
-                    .status(400)    
+                    .status(400)
                     .json({ message: "Invalid status type" + status });
             }
             // loggedIn user must be of toUserId
