@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const jwt=require("jsonwebtoken");
-const bcrypt=require("bcrypt");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
     {
         firstName: {
@@ -40,16 +40,28 @@ const userSchema = new mongoose.Schema(
         },
         gender: {
             type: String,
-            enum:{
-                values: ["male", "female","others"],
-                message:`{VALUE} is not a valid gender type`
-            }
+            enum: {
+                values: ["male", "female", "others"],
+                message: `{VALUE} is not a valid gender type`,
+            },
             /* validate(value) {
                 if (!["male", "female", "others"].includes(value)) {
                     throw new Error("Gender Data is not Valid");
                 }
             }, */
         },
+        isPremium: {
+            type: Boolean,
+            default: false,
+        },
+        membershipType: {
+            type: String,
+        },
+        // We should also add membership validity.
+        /*   membershipValidity:{
+            type:Date,
+        }, */
+
         photoUrl: {
             type: String,
             default:
