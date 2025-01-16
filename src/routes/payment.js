@@ -78,6 +78,7 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
         console.log("Premiumness of the user:-> ", user.isPremium);
         console.log("User has been made premium"); // This is just for debugging purposes
         user.membershipType = payment.notes.membershipType;
+        await user.save();
 
         // return success response to the webhook
         /* if (req.body.event === "payment.captured") {
